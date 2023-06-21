@@ -19,7 +19,8 @@ class PublicReviewsPlugin extends GenericPlugin {
     function register($category, $path, $mainContextId = null) {
         if (parent::register($category, $path, $mainContextId)) {
             if ($this->getEnabled($mainContextId)) {
-                HookRegistry::register('Templates::Article::Footer::PageFooter', [$this, 'display']);
+                HookRegistry::register('Templates::Article::Details', [$this, 'display']);
+                HookRegistry::register('LoadHandler', [$this, 'callbackHandleContent']);
             }
             return true;
         }
@@ -50,9 +51,40 @@ class PublicReviewsPlugin extends GenericPlugin {
         $journal = Application::get()->getRequest()->getContext();
         $submission = $templateMgr->getTemplateVars('article');
 
-        /*$templateMgr->assign([
-        ]);*/
+        $reviewAssignmentDao = DAORegistry::getDAO('ReviewAssignmentDAO');
+        $reviewAssignments = $reviewAssignmentDao->getBySubmissionId($submission->getId());
+
+        $reviewRoundDao = DAORegistry::getDAO('ReviewRoundDAO');
+        $reviewRounds = $reviewRoundDao->getBySubmissionId($submission->getId());
+        //error_log(print_r($reviewRounds,true));
+        $templateMgr->assign([
+            'pr_reviewAssignments' => $reviewAssignments,
+            'pr_reviewRounds' => $reviewRounds->toArray(),
+        ]);
+
         $output .= $templateMgr->fetch($this->getTemplateResource('publicReviews.tpl'));
+        return false;
+    }
+
+    /**
+     * Declare the handler function to process the actual page PATH
+     * @param $hookName string The name of the invoked hook
+     * @param $args array Hook parameters
+     * @return boolean Hook handling status
+     */
+    function callbackHandleContent($hookName, $args) {
+        $request = Application::get()->getRequest();
+        $templateMgr = TemplateManager::getManager($request);
+
+        $page =& $args[0];
+        $op =& $args[1];
+
+        if ($page == 'publicReviews' && $op == 'view') {
+            define('HANDLER_CLASS', 'PublicReviewsHandler');
+            $this->import('PublicReviewsHandler');
+
+            PublicReviewsHandler::setPlugin($this);
+        }
         return false;
     }
 }
