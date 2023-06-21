@@ -11,7 +11,7 @@
 <ul>
 {foreach from=$pr_reviewRounds item=reviewRound}
     <li>
-        <div>Round {$reviewRound->getRound()|escape}</div>
+        <div>{translate key="plugins.generic.publicReviews.round" round=$reviewRound->getRound()|escape}</div>
         <ul>
             {foreach from=$pr_reviewAssignments item=reviewAssignment}
                 {* Make sure we're dealing with a review assignment in this round *}
