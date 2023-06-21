@@ -16,3 +16,9 @@ msgstr "Public Reviews Plugin"
 
 msgid "plugins.generic.publicReviews.description"
 msgstr "This plugin adds a public view of the peer review process alongside the published article."
+
+msgid "plugins.generic.publicReviews.reviewerName"
+msgstr "Reviewer: {$reviewerName}"
+
+msgid "plugins.generic.publicReviews.reviewDate"
+msgstr "Date: {$reviewDate}"

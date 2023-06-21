@@ -11,7 +11,8 @@
 
 <div class="page">
 	<h2>Peer Review</h2>
-	<div class="reviewerName">Reviewer: {$reviewAssignment->getReviewerFullName()|escape}</div>
+	<div class="reviewerName">{translate key="plugins.generic.publicReviews.reviewerName" reviewerName=$reviewAssignment->getReviewerFullName()|escape}</div>
+	<div class="dateCompleted">{translate key="plugins.generic.publicReviews.reviewDate" reviewDate=$reviewAssignment->getDateCompleted()|date_format:$dateFormatShort}</div>
 	<div class="reviewContent">
 		<ul>
 			{foreach from=$reviewComments item=comment}
