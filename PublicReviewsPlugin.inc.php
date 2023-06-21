@@ -84,6 +84,7 @@ class PublicReviewsPlugin extends GenericPlugin {
             $this->import('PublicReviewsHandler');
 
             PublicReviewsHandler::setPlugin($this);
+            return true;
         }
         return false;
     }

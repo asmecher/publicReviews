@@ -43,21 +43,35 @@ class PublicReviewsHandler extends Handler {
 	function view($args, $request) {
 		// Assign the template vars needed and display
 		$templateMgr = TemplateManager::getManager($request);
-		die('here');
+		$journal = $request->getJournal();
+
+		$reviewAssignmentId = $request->getUserVar('reviewAssignmentId');
+		$reviewAssignmentDao = DAORegistry::getDAO('ReviewAssignmentDAO');
+		$reviewAssignment = $reviewAssignmentDao->getById($reviewAssignmentId);
+		if (!$reviewAssignment) {
+			fatalError('The review assignment does not exist.');
+		}
+
+		$submissionDao = DAORegistry::getDAO('SubmissionDAO');
+		$submission = $submissionDao->getById($reviewAssignment->getSubmissionId());
+		if ($submission->getContextId() != $journal->getId()) {
+			fatalError('Context ID for review assignment does not match.');
+		}
+		if ($submission->getStatus() != STATUS_PUBLISHED) {
+			fatalError('The submission is not published.');
+		}
+
 		$this->setupTemplate($request);
-		$templateMgr->assign('title', self::$staticPage->getLocalizedTitle());
 
-		$vars = array();
-		if ($context) $vars = array(
-			'{$contactName}' => $context->getData('contactName'),
-			'{$contactEmail}' => $context->getData('contactEmail'),
-			'{$supportName}' => $context->getData('supportName'),
-			'{$supportPhone}' => $context->getData('supportPhone'),
-			'{$supportEmail}' => $context->getData('supportEmail'),
-		);
-		$templateMgr->assign('content', strtr(self::$staticPage->getLocalizedContent(), $vars));
+		$submissionCommentDao = DAORegistry::getDAO('SubmissionCommentDAO');
+		$reviewComments = $submissionCommentDao->getSubmissionComments($submission->getId(), COMMENT_TYPE_PEER_REVIEW, $reviewAssignmentId);
 
-		$templateMgr->display(self::$plugin->getTemplateResource('content.tpl'));
+		$templateMgr->assign([
+			'reviewAssignment' => $reviewAssignment,
+			'reviewComments' => $reviewComments->toArray(),
+		]);
+
+		$templateMgr->display(self::$plugin->getTemplateResource('publicReview.tpl'));
 	}
 }
 
