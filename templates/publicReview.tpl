@@ -7,7 +7,7 @@
  *
  * Display Static Page content
  *}
-{include file="frontend/components/header.tpl" pageTitleTranslated=$title}
+{include file="frontend/components/header.tpl" pageTitle="plugins.generic.publicReviews.peerReview"}
 
 <div class="page">
 	<h2>Peer Review</h2>

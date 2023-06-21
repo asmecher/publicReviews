@@ -22,3 +22,6 @@ msgstr "Reviewer: {$reviewerName}"
 
 msgid "plugins.generic.publicReviews.reviewDate"
 msgstr "Date: {$reviewDate}"
+
+msgid "plugins.generic.publicReviews.peerReview"
+msgstr "Public Peer Review"
