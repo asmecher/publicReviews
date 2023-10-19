@@ -1,0 +1,30 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-10-18T15:26:00+00:00\n"
+"PO-Revision-Date: 2023-10-18T15:26:00+00:00\n"
+"Language: \n"
+
+msgid "plugins.generic.publicReviews.displayName"
+msgstr "Öffentliche Rezensionen Plugin"
+
+msgid "plugins.generic.publicReviews.description"
+msgstr "Dieses Plugin fügt eine öffentliche Ansicht des Peer-Review-Prozessses neben dem veröffentlichten Artikel hinzu."
+
+msgid "plugins.generic.publicReviews.round"
+msgstr "Runde {$round}"
+
+msgid "plugins.generic.publicReviews.reviewerName"
+msgstr "Begutachter: {$reviewerName}"
+
+msgid "plugins.generic.publicReviews.reviewDate"
+msgstr "Datum: {$reviewDate}"
+
+msgid "plugins.generic.publicReviews.peerReview"
+msgstr "Öffentliches Peer-Review"
